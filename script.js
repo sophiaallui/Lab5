@@ -38,7 +38,8 @@ img.addEventListener('load', (event) => {
       const file = event.target.files[0]; 
       const url = URL.createObjectURL(file); // creates path 
       // takes the img.src to set the url ==> path 
-      document.querySelector('img').src = url; 
+      //document.querySelector('img').src = url; 
+      img.src = url; 
       // set the image src 
 
   }
