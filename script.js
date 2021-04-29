@@ -2,12 +2,53 @@
 
 const img = new Image(); // used to load image from <input> and draw to canvas
 
+//checking canvas code
+/*var c = document.getElementById("user-image"); 
+var context = c.getContext('2d'); 
+context.rect(20,20,360,360); 
+context.fillStyle = 'red';
+context.fill();*/ 
+
 // Fires whenever the img object loads a new image (such as with img.src =)
-img.addEventListener('load', () => {
+img.addEventListener('load', (event) => {
   // TODO
 
   // Some helpful tips:
-  // - Fill the whole Canvas with black first to add borders on non-square images, then draw on top
+  // - Fill the whole Canvas with black first to add borders on non-square images, 
+  
+  // Canvas code works, tried outside of load 
+  var c = document.getElementById("user-image"); 
+  var context = c.getContext('2d'); 
+  context.rect(20,20,360,360); 
+  context.fillStyle = 'black';
+  context.fill();
+
+  // using getElementById
+  
+ /* var anotherway = document.getElementById('image-input'); 
+
+  // new image: 
+  anotherway.addEventListener('change', (event) => {
+    const file = event.target.file; 
+  }); */
+
+  // Using querySelector
+  document.querySelector('#image-input').onchange = event => {
+
+      const file = event.target.files[0]; 
+      const url = URL.createObjectURL(file); // creates path 
+      // takes the img.src to set the url ==> path 
+      document.querySelector('img').src = url; 
+      // set the image src 
+
+  }
+
+  console.log('loaded image'); 
+
+  //getting the location of the file
+
+  
+  //then draw on top
   // - Clear the form when a new image is selected
   // - If you draw the image to canvas here, it will update as soon as a new image is selected
 });
