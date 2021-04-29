@@ -23,6 +23,7 @@ img.addEventListener('load', (event) => {
   context.fillStyle = 'black';
   context.fill();
 
+  // get reference .width and .height
   // using getElementById
   
  /* var anotherway = document.getElementById('image-input'); 
@@ -32,18 +33,9 @@ img.addEventListener('load', (event) => {
     const file = event.target.file; 
   }); */
 
-  // Using querySelector
-  document.querySelector('#image-input').onchange = event => {
+  /* canvas.drawImage( …. ) --> getdimensions*/
 
-      const file = event.target.files[0]; 
-      const url = URL.createObjectURL(file); // creates path 
-      // takes the img.src to set the url ==> path 
-      //document.querySelector('img').src = url; 
-      img.src = url; 
-      // set the image src 
-
-  }
-
+  context.drawImage(img,10,10);
   console.log('loaded image'); 
 
   //getting the location of the file
@@ -53,6 +45,32 @@ img.addEventListener('load', (event) => {
   // - Clear the form when a new image is selected
   // - If you draw the image to canvas here, it will update as soon as a new image is selected
 });
+
+/*
+element.addEventListener( ‘change’, () => { function });
+element.addEventListener( ‘change’, () => { function });
+input element 
+*/ 
+
+  // Using querySelector
+document.querySelector('#image-input').addEventListener('change', () => {
+  console.log(document.querySelector('#image-input'));
+    console.log('hello');
+    // reference to image inputL: document.querySelector('#image-input') 
+    const file = document.querySelector('#image-input').files[0]; 
+    const url = URL.createObjectURL(file); // creates path 
+    // takes the img.src to set the url ==> path 
+    // img = image obj 
+    img.src = url; 
+
+    // get dimensions
+
+    console.log(file); 
+    console.log(url);
+    //img.src = url; 
+    // set the image src 
+
+})
 
 /**
  * Takes in the dimensions of the canvas and the new image, then calculates the new
