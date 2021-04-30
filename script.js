@@ -2,48 +2,31 @@
 
 const img = new Image(); // used to load image from <input> and draw to canvas
 
-//checking canvas code
-/*var c = document.getElementById("user-image"); 
-var context = c.getContext('2d'); 
-context.rect(20,20,360,360); 
-context.fillStyle = 'red';
-context.fill();*/ 
-
 // Fires whenever the img object loads a new image (such as with img.src =)
 img.addEventListener('load', (event) => {
   // TODO
 
-  // Some helpful tips:
-  // - Fill the whole Canvas with black first to add borders on non-square images, 
+    // Some helpful tips:
+    // - Fill the whole Canvas with black first to add borders on non-square images, 
+    
+    var c = document.getElementById("user-image"); 
+    var context = c.getContext('2d'); 
+    context.rect(0,0,c.width,c.height); 
+    context.fillStyle = 'black';
+    context.fill();
+
+    //console.log(c.height);
+    // get reference .width and .height
+
+    /* canvas.drawImage( …. ) --> getdimensions*/
+    const dim = getDimmensions(c.width,c.width,img.width,img.height); 
+
+    img.width = dim.width;
+    img.height = dim.height;
   
-  // Canvas code works, tried outside of load 
-  var c = document.getElementById("user-image"); 
-  var context = c.getContext('2d'); 
-  context.rect(20,20,360,360); 
-  context.fillStyle = 'black';
-  context.fill();
-
-  // get reference .width and .height
-  // using getElementById
-  
- /* var anotherway = document.getElementById('image-input'); 
-
-  // new image: 
-  anotherway.addEventListener('change', (event) => {
-    const file = event.target.file; 
-  }); */
-
-  /* canvas.drawImage( …. ) --> getdimensions*/
-
-  context.drawImage(img,10,10);
-  console.log('loaded image'); 
-
-  //getting the location of the file
-
-  
-  //then draw on top
-  // - Clear the form when a new image is selected
-  // - If you draw the image to canvas here, it will update as soon as a new image is selected
+    context.drawImage(img,dim.startX,dim.startY);
+    // - Clear the form when a new image is selected
+    // - If you draw the image to canvas here, it will update as soon as a new image is selected
 });
 
 /*
@@ -54,23 +37,45 @@ input element
 
   // Using querySelector
 document.querySelector('#image-input').addEventListener('change', () => {
-  console.log(document.querySelector('#image-input'));
-    console.log('hello');
+    //console.log(document.querySelector('#image-input'));
     // reference to image inputL: document.querySelector('#image-input') 
     const file = document.querySelector('#image-input').files[0]; 
     const url = URL.createObjectURL(file); // creates path 
     // takes the img.src to set the url ==> path 
     // img = image obj 
+    
     img.src = url; 
 
     // get dimensions
 
-    console.log(file); 
-    console.log(url);
+    //console.log(file); 
+    //console.log(url);
     //img.src = url; 
     // set the image src 
 
 })
+
+function memeText(){ 
+  //document.getElementById('generate-meme').submit(); 
+  var topText = document.getElementById("text-top").value; 
+
+  var canvas = document.getElementById("user-image"); 
+  var context = canvas.getContext("2d")
+
+  context.fillStyle = "red"; 
+  context.strokeStyle = "red"; 
+
+  context.font = "35px Arial";
+  context.fillText(topText,0,0);
+  context.stroke();
+}
+
+const form = document.getElementById('generate-meme');  
+form.addEventListener('submit',memeText);
+//var topText = document.getElementById("text-top").value; 
+//var topText = document.querySelector('#text-top').value; 
+ // console.log(topText);
+
 
 /**
  * Takes in the dimensions of the canvas and the new image, then calculates the new
@@ -107,6 +112,7 @@ function getDimmensions(canvasWidth, canvasHeight, imageWidth, imageHeight) {
     // Start the X at the very left since it's max width, but center the height
     startX = 0;
     startY = (canvasHeight - height) / 2;
+
   }
 
   return { 'width': width, 'height': height, 'startX': startX, 'startY': startY }
