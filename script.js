@@ -24,7 +24,8 @@ img.addEventListener('load', (event) => {
     img.width = dim.width;
     img.height = dim.height;
   
-    context.drawImage(img,dim.startX,dim.startY);
+    context.drawImage(img,dim.startX,dim.startY,img.width,img.height);
+    
     // - Clear the form when a new image is selected
     // - If you draw the image to canvas here, it will update as soon as a new image is selected
 });
@@ -48,6 +49,13 @@ document.querySelector('#image-input').addEventListener('change', () => {
 
 })
 
+// using queryselector
+const selectorForm = document.querySelector('generate-meme'); 
+
+// using getelementbyId
+const form = document.getElementById('generate-meme');  
+//form.addEventListener('submit',memeText);
+
 // hoping to take care of uploading the meme text 
 function memeText(){ 
   //document.getElementById('generate-meme').submit(); 
@@ -68,17 +76,60 @@ function memeText(){
   context.fillText(bottomText,10,10)
 }
 
-const form = document.getElementById('generate-meme');  
-//form.addEventListener('submit',memeText);
+
+/*// Using querySelector 
+
+selectorForm.addEventListener('submit', () => { 
+  memeText();
+}); */
+
+/*document.querySelector('submit').addEventListener('submit', () => {
+  memeText();
+});*/
+
+document.getElementById("generate-meme").addEventListener('submit', (event) => { 
+  
+  event.preventDefault();// prevents from refreshing
+  
+  memeText();
+  // submit, can have an event (arg) 
+  // event listener -> clicked event obj, what eas clicked
+     
+})
+
+/*
+// saw it for a brief second
+document.getElementById("submit").onsubmit = function(){
+  memeText(); 
+};
+*/
 
 // Reseting the meme
-function clear(){ 
+/*function clear(){ 
   document.getElementById("generate-meme").reset();
-}
+}*/
 
 document.getElementById("reset").onclick = function(){
-  clear(); 
+  document.getElementById("generate-meme").reset();
+  //disable and enable 
+  // when it's submit 
+  //mdn
+  //remove
+  //get attribute remove attribute
+  // element.get
+  // set attribute >> hide 
+
 }; 
+
+// Using querySelector 
+/*
+const resetButton = selectorForm.querySelector('[type=reset'); 
+
+selectorForm.addEventListener('reset', () => { 
+  clear(); 
+  //document.getElementById("generate-meme").reset();
+}); 
+*/ 
 
 /*Another way but using querySelector
 
@@ -88,10 +139,6 @@ rest.addEventListener('click', event => {
 })
 */ 
 
-// saw it for a brief second
-document.getElementById("submit").onsubmit = function(){
-  memeText(); 
-};
 
 // Reading the meme 
 function read(){ 
@@ -106,6 +153,8 @@ function read(){
 
 }
 
+// button group
+// grey selectoer querySelector(button[type="submit"])
 document.getElementById("button").onclick = function(){ 
   read();
 }; 
