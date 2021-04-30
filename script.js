@@ -76,6 +76,17 @@ form.addEventListener('submit',memeText);
  // console.log(topText);
 
 
+// Reseting the memem
+function clear(){ 
+  document.getElementById("generate-meme").reset();
+}
+
+form.addEventListener('reset',clear);
+
+
+
+
+
 /**
  * Takes in the dimensions of the canvas and the new image, then calculates the new
  * dimensions of the image so that it fits perfectly into the Canvas and maintains aspect ratio
