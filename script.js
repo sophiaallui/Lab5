@@ -11,7 +11,7 @@ img.addEventListener('load', (event) => {
     
     var c = document.getElementById("user-image"); 
     var context = c.getContext('2d'); 
-    context.rect(0,0,c.width,c.height); 
+    context.rect(0,0,400,400); 
     context.fillStyle = 'black';
     context.fill();
 
@@ -109,6 +109,7 @@ document.getElementById("submit").onsubmit = function(){
   document.getElementById("generate-meme").reset();
 }*/
 
+/*
 document.getElementById("reset").onclick = function(){
   document.getElementById("generate-meme").reset();
   //disable and enable 
@@ -119,7 +120,23 @@ document.getElementById("reset").onclick = function(){
   // element.get
   // set attribute >> hide 
 
-}; 
+}; */ 
+
+document.querySelector("button[type='reset']").removeAttribute("disabled");
+document.querySelector("button[type='button']").removeAttribute("disabled");
+
+/*var b = document.getElementsById("button");
+
+for (var i = 0; i < b.length; i++) {
+  b[i].removeAttribute("disabled");
+}*/ 
+
+//document.getElementById("button").disabled = false;
+// reset
+document.querySelector("reset").addEventListener('click', (event) => { 
+  document.getElementById("generate-meme")[0].reset();
+
+}); 
 
 // Using querySelector 
 /*
