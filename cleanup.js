@@ -8,17 +8,16 @@ img.addEventListener('load', (event) => {
     
     var c = document.getElementById("user-image"); 
     var context = c.getContext('2d'); 
-    context.rect(0,0,400,400); 
+    context.rect(0,0,c.width,c.height); 
     context.fillStyle = 'black';
     context.fill();
-
+// fillRect look up
     /* canvas.drawImage( …. ) --> getdimensions*/
     var dim = getDimmensions(c.width,c.height,img.width,img.height); 
 
-    img.width = dim.width;
-    img.height = dim.height;
   
-    context.drawImage(img,dim.startX,dim.startY,img.width,img.height);
+    context.drawImage(img,dim.startX,dim.startY,dim.width,dim.height);
+
     
 });
 
