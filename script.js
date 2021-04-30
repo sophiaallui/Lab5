@@ -61,31 +61,54 @@ function memeText(){
   context.fillStyle = "red"; 
   context.strokeStyle = "red"; 
 
-  context.font = "20px Arial";
+  context.font = "40px Arial";
   // top left corner 
   context.fillText(topText,0,0);
   // bottom left corner
-  context.fillText(bottomText,0,350)
-  context.stroke();
+  context.fillText(bottomText,10,10)
 }
 
 const form = document.getElementById('generate-meme');  
-form.addEventListener('submit',memeText);
-//var topText = document.getElementById("text-top").value; 
-//var topText = document.querySelector('#text-top').value; 
- // console.log(topText);
+//form.addEventListener('submit',memeText);
 
-
-// Reseting the memem
+// Reseting the meme
 function clear(){ 
   document.getElementById("generate-meme").reset();
 }
 
-form.addEventListener('reset',clear);
+document.getElementById("reset").onclick = function(){
+  clear(); 
+}; 
 
+/*Another way but using querySelector
 
+const rest = document.querySelectror('reset'); 
+rest.addEventListener('click', event => {
+    document.getElementById("generate-meme").reset();
+})
+*/ 
 
+// saw it for a brief second
+document.getElementById("submit").onsubmit = function(){
+  memeText(); 
+};
 
+// Reading the meme 
+function read(){ 
+
+  var message = window.speechSynthesis; 
+
+  var topRead = new SpeechSynthesisUtterance(document.getElementById("text-top")); 
+  var bottomRead = new SpeechSynthesisUtterance(document.getElementById("text-bottom")); 
+
+  message.speak(topRead); 
+  message.speak(bottomRead);
+
+}
+
+document.getElementById("button").onclick = function(){ 
+  read();
+}; 
 
 /**
  * Takes in the dimensions of the canvas and the new image, then calculates the new
