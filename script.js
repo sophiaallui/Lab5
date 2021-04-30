@@ -19,13 +19,13 @@ img.addEventListener('load', (event) => {
     // get reference .width and .height
 
     /* canvas.drawImage( …. ) --> getdimensions*/
-    const dim = getDimmensions(c.width,c.width,img.width,img.height); 
+    const dim = getDimmensions(c.width,c.height,img.width,img.height); 
 
     img.width = dim.width;
     img.height = dim.height;
   
     context.drawImage(img,dim.startX,dim.startY,img.width,img.height);
-    
+    console.log(dim.startX + " " + dim.startY);
     // - Clear the form when a new image is selected
     // - If you draw the image to canvas here, it will update as soon as a new image is selected
 });
@@ -71,9 +71,12 @@ function memeText(){
 
   context.font = "40px Arial";
   // top left corner 
-  context.fillText(topText,0,0);
+  
+
+  context.fillText(topText,0,50);
   // bottom left corner
-  context.fillText(bottomText,10,10)
+  context.fillText(bottomText,0,canvas.height);
+  
 }
 
 
@@ -122,20 +125,23 @@ document.getElementById("reset").onclick = function(){
 
 }; */ 
 
+// clearing the disabled features: clear and read text 
 document.querySelector("button[type='reset']").removeAttribute("disabled");
 document.querySelector("button[type='button']").removeAttribute("disabled");
 
-/*var b = document.getElementsById("button");
-
-for (var i = 0; i < b.length; i++) {
-  b[i].removeAttribute("disabled");
-}*/ 
-
 //document.getElementById("button").disabled = false;
-// reset
-document.querySelector("reset").addEventListener('click', (event) => { 
-  document.getElementById("generate-meme")[0].reset();
 
+// CLEAR BUTTON: current: responds, but need to clear the canvas
+document.querySelector("button[type='reset']").addEventListener('click', (event) => { 
+  // Clears the input 
+  document.getElementById("generate-meme")[0].rest();
+
+  // want to clear the canvas 
+  /*var canvas = document.getElementById("user-image"); 
+  var context = canvas.getContext('2d'); */
+
+  context.clearRect(0,0,canvas.width, canvas.height);
+  context.restore();
 }); 
 
 // Using querySelector 
@@ -162,8 +168,8 @@ function read(){
 
   var message = window.speechSynthesis; 
 
-  var topRead = new SpeechSynthesisUtterance(document.getElementById("text-top")); 
-  var bottomRead = new SpeechSynthesisUtterance(document.getElementById("text-bottom")); 
+  var topRead = new SpeechSynthesisUtterance(document.getElementById("text-top").value); 
+  var bottomRead = new SpeechSynthesisUtterance(document.getElementById("text-bottom").value); 
 
   message.speak(topRead); 
   message.speak(bottomRead);
@@ -171,10 +177,15 @@ function read(){
 }
 
 // button group
-// grey selectoer querySelector(button[type="submit"])
+/* grey selectoer querySelector(button[type="submit"])
 document.getElementById("button").onclick = function(){ 
   read();
-}; 
+}; */ 
+
+document.querySelector("button[type='button']").addEventListener('click', (event) => { 
+  read(); 
+
+}); 
 
 /**
  * Takes in the dimensions of the canvas and the new image, then calculates the new
