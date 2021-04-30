@@ -38,35 +38,34 @@ input element
   // Using querySelector
 document.querySelector('#image-input').addEventListener('change', () => {
     //console.log(document.querySelector('#image-input'));
-    // reference to image inputL: document.querySelector('#image-input') 
     const file = document.querySelector('#image-input').files[0]; 
     const url = URL.createObjectURL(file); // creates path 
-    // takes the img.src to set the url ==> path 
-    // img = image obj 
     
+    // set image object to have a path
     img.src = url; 
 
     // get dimensions
 
-    //console.log(file); 
-    //console.log(url);
-    //img.src = url; 
-    // set the image src 
-
 })
 
+// hoping to take care of uploading the meme text 
 function memeText(){ 
   //document.getElementById('generate-meme').submit(); 
   var topText = document.getElementById("text-top").value; 
+  var bottomText = document.getElementById("text-bottom").value;
 
+  // Accessing the canvas to add text 
   var canvas = document.getElementById("user-image"); 
   var context = canvas.getContext("2d")
 
   context.fillStyle = "red"; 
   context.strokeStyle = "red"; 
 
-  context.font = "35px Arial";
+  context.font = "20px Arial";
+  // top left corner 
   context.fillText(topText,0,0);
+  // bottom left corner
+  context.fillText(bottomText,0,350)
   context.stroke();
 }
 
