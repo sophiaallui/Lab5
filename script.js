@@ -36,11 +36,17 @@ function memeText(){
   context.fillStyle = "red"; 
   context.strokeStyle = "red"; 
   context.font = "40px Impact";
+
+  let topCount = context.measureText(topText).width/2;   
+  let btmCount = context.measureText(bottomText).width/2;   
+
+  let canvasWidth = (canvas.width)/2;
+
   
   // top left corner 
-  context.fillText(topText,0,50);
+  context.fillText(topText,canvasWidth - topCount,50);
   // bottom left corner
-  context.fillText(bottomText,0,canvas.height-15);
+  context.fillText(bottomText,canvasWidth - btmCount,canvas.height-15);
   
 }
 
