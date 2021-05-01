@@ -1,11 +1,14 @@
 # CSE110 SP21 Lab 5
 
-## Author(s):
+## Author:
 - Sophia Lui
 
 ## Part 1:
+### Project: 
+Language: JavaScript
+Purpose: Generate memes
 
-LINK TO YOUR PUBLISHED SITE
+https://sophiaallui.github.io/Lab5/
 
 ## Part 2:
 
