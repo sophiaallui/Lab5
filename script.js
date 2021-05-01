@@ -4,10 +4,6 @@ const img = new Image(); // used to load image from <input> and draw to canvas
 
 // Fires whenever the img object loads a new image (such as with img.src =)
 img.addEventListener('load', (event) => {
-  // TODO
-
-    // Some helpful tips:
-    // - Fill the whole Canvas with black first to add borders on non-square images, 
     
     var c = document.getElementById("user-image"); 
     var context = c.getContext('2d'); 
@@ -15,50 +11,21 @@ img.addEventListener('load', (event) => {
     context.fillStyle = 'black';
     context.fill();
 
-    //console.log(c.height);
-    // get reference .width and .height
-
-    /* canvas.drawImage( …. ) --> getdimensions*/
-    const dim = getDimmensions(c.width,c.height,img.width,img.height); 
-
-    img.width = dim.width;
-    img.height = dim.height;
+    var dim = getDimmensions(c.width,c.height,img.width,img.height); 
   
-    context.drawImage(img,dim.startX,dim.startY,img.width,img.height);
-    console.log(dim.startX + " " + dim.startY);
-    // - Clear the form when a new image is selected
-    // - If you draw the image to canvas here, it will update as soon as a new image is selected
+    context.drawImage(img,dim.startX,dim.startY,dim.width,dim.height);
 });
 
-/*
-element.addEventListener( ‘change’, () => { function });
-element.addEventListener( ‘change’, () => { function });
-input element 
-*/ 
-
-  // Using querySelector
+// Uploading Image/Creating path 
 document.querySelector('#image-input').addEventListener('change', () => {
-    //console.log(document.querySelector('#image-input'));
     const file = document.querySelector('#image-input').files[0]; 
     const url = URL.createObjectURL(file); // creates path 
-    
     // set image object to have a path
     img.src = url; 
-
-    // get dimensions
-
 })
 
-// using queryselector
-const selectorForm = document.querySelector('generate-meme'); 
-
-// using getelementbyId
-const form = document.getElementById('generate-meme');  
-//form.addEventListener('submit',memeText);
-
-// hoping to take care of uploading the meme text 
+// LOADING MEME TEXT 
 function memeText(){ 
-  //document.getElementById('generate-meme').submit(); 
   var topText = document.getElementById("text-top").value; 
   var bottomText = document.getElementById("text-bottom").value;
 
@@ -68,124 +35,62 @@ function memeText(){
 
   context.fillStyle = "red"; 
   context.strokeStyle = "red"; 
-
-  context.font = "40px Arial";
+  context.font = "40px Impact";
   // top left corner 
-  
-
   context.fillText(topText,0,50);
   // bottom left corner
-  context.fillText(bottomText,0,canvas.height);
+  context.fillText(bottomText,0,canvas.height-15);
   
 }
 
-
-/*// Using querySelector 
-
-selectorForm.addEventListener('submit', () => { 
-  memeText();
-}); */
-
-/*document.querySelector('submit').addEventListener('submit', () => {
-  memeText();
-});*/
-
+// LOADS INTO HTML 
 document.getElementById("generate-meme").addEventListener('submit', (event) => { 
-  
   event.preventDefault();// prevents from refreshing
-  
   memeText();
-  // submit, can have an event (arg) 
-  // event listener -> clicked event obj, what eas clicked
      
 })
 
-/*
-// saw it for a brief second
-document.getElementById("submit").onsubmit = function(){
-  memeText(); 
-};
-*/
-
-// Reseting the meme
-/*function clear(){ 
-  document.getElementById("generate-meme").reset();
-}*/
-
-/*
-document.getElementById("reset").onclick = function(){
-  document.getElementById("generate-meme").reset();
-  //disable and enable 
-  // when it's submit 
-  //mdn
-  //remove
-  //get attribute remove attribute
-  // element.get
-  // set attribute >> hide 
-
-}; */ 
-
-// clearing the disabled features: clear and read text 
+// CLEARING THE DISABLE FUNCTION FOR 'rest' AND 'button'  
 document.querySelector("button[type='reset']").removeAttribute("disabled");
 document.querySelector("button[type='button']").removeAttribute("disabled");
 
-//document.getElementById("button").disabled = false;
-
-// CLEAR BUTTON: current: responds, but need to clear the canvas
+// REST BUTTON
 document.querySelector("button[type='reset']").addEventListener('click', (event) => { 
-  // Clears the input 
-  document.getElementById("generate-meme")[0].rest();
-
-  // want to clear the canvas 
-  /*var canvas = document.getElementById("user-image"); 
-  var context = canvas.getContext('2d'); */
+  var canvas = document.getElementById("user-image"); 
+  var context = canvas.getContext('2d'); 
 
   context.clearRect(0,0,canvas.width, canvas.height);
-  context.restore();
 }); 
-
-// Using querySelector 
-/*
-const resetButton = selectorForm.querySelector('[type=reset'); 
-
-selectorForm.addEventListener('reset', () => { 
-  clear(); 
-  //document.getElementById("generate-meme").reset();
-}); 
-*/ 
-
-/*Another way but using querySelector
-
-const rest = document.querySelectror('reset'); 
-rest.addEventListener('click', event => {
-    document.getElementById("generate-meme").reset();
-})
-*/ 
-
 
 // Reading the meme 
 function read(){ 
 
-  var message = window.speechSynthesis; 
+  let message = window.speechSynthesis; 
 
-  var topRead = new SpeechSynthesisUtterance(document.getElementById("text-top").value); 
-  var bottomRead = new SpeechSynthesisUtterance(document.getElementById("text-bottom").value); 
+  let topRead = new SpeechSynthesisUtterance(document.getElementById("text-top").value); 
+  let bottomRead = new SpeechSynthesisUtterance(document.getElementById("text-bottom").value); 
 
   message.speak(topRead); 
   message.speak(bottomRead);
 
 }
 
-// button group
-/* grey selectoer querySelector(button[type="submit"])
-document.getElementById("button").onclick = function(){ 
-  read();
-}; */ 
-
-document.querySelector("button[type='button']").addEventListener('click', (event) => { 
+// LOADS READ TEXT FUNCTION INTO HTML 
+document.querySelector("button[type='button']").addEventListener('click', () => { 
   read(); 
-
 }); 
+/*
+function changeVolume(){ 
+  
+  //var speechVol = speechSynthesisUtteranceInstance.volume; 
+  var speechVol = document.querySelector("input[type='range']").value;
+  // 0 - 100
+  speechSynthesisUtteranceInstance.volume = speedVol;
+  // convert some stuff, range from  1-100 > utterence units 
+
+
+  console.log("vol: " + document.querySelector("input[type='range']"));
+}*/
 
 /**
  * Takes in the dimensions of the canvas and the new image, then calculates the new
