@@ -76,92 +76,54 @@ function read(){
 
   let topRead = new SpeechSynthesisUtterance(document.getElementById("text-top").value); 
   let bottomRead = new SpeechSynthesisUtterance(document.getElementById("text-bottom").value); 
+  let speechVol = document.querySelector("input[type='range']").value;
+  var selectedOption = document.getElementById("voice-selection").selectedOptions[0].getAttribute('data-name');
 
-  var speechVol = document.querySelector("input[type='range']").value;
-  //changeVolImage(speechVol); 
+  for(var i = 0; i < voices.length ; i++) {
+    if(voices[i].name === selectedOption) {
+      topRead.voice = voices[i];
+      bottomRead.voice = voices[i];
+    }
+  }
 
-
+  topRead.volume = parseFloat(speechVol/100); 
+  bottomRead.volume = parseFloat(speechVol/100);
 
   // converting the volume input to speech limits 0-1
-  message.volume= parseFloat(speechVol/100);
   message.cancel();
-  console.log(message.volume);
   message.speak(topRead); 
   message.speak(bottomRead);
   
 }
 
-//document.getElementById("img").src = "icons/volume-level-3.svg";
-
-/*
-function changeVolImage(curVol){ 
-
-  // access the img attribute 
-  // take the curVol and set the conditions 
+// CHANGE VOLUME ICON 
+document.getElementById('volume-group').addEventListener('input', () =>{
+    let changeVol = document.querySelector("input[type='range']");
+    // Volume 3 
+      if(67 <= changeVol.value && changeVol.value <= 100){ 
+        document.querySelector("div>img").src="icons/volume-level-3.svg";
+      // Volume 2 
+      }else if( 34<= changeVol.value && changeVol.value <= 66){ 
+        document.querySelector("div>img").src= "icons/volume-level-2.svg";
+      // Volume 1 
+      }else if(1 <= changeVol.value && changeVol.value <= 33){ 
+        document.querySelector("div>img").src= "icons/volume-level-1.svg";
+      // Volume 0
+      }else{ 
+        document.querySelector("div>img").src= "icons/volume-level-0.svg";
+      }
+});
   
-  // Volume 3 
-  if(67 <= curVol || curVol >= 100){ 
-    document.getElementById("img").src="volume-level-3.svg";
-  // Volume 2 
-  }else if( 34<= curVol || curVol >= 66){ 
-    document.getElementById("img").src="volume-level-2.svg";
-  // Volume 1 
-  }else if(1 <= curVol || curVol >= 33){ 
-    document.getElementById("img").src="volume-level-1.svg";
-  // Volume 0
-  }else{ 
-    document.getElementById("img").src="volume-level-0.svg";
-  }
-  console.log(document.getElementById("img").value);
 
-}
-
-*/ 
 document.getElementById("voice-selection").removeAttribute("disabled");
+var voices = [];
 
-
-/*function changeVoice(){
-
-  var voices = speechSynthesis.getVoices(); 
-  var voiceSelection = doument.getElementById('voice-selection')
-
-  voices.forEach(function(voice, i) {
-    // Create a new option element.
-		var option = document.createElement('option');
-    
-    // Set the options value and text.
-		option.value = voice.name;
-		option.innerHTML = voice.name;
-
-    option.setAttribute('data-lang', voices[i].lang);
-    option.setAttribute('data-name', voices[i].name);
-		  
-    // Add the option to the voice selector.
-		voiceSelection.appendChild(option);
-	});
-
-}
-
-// Execute loadVoices.
-changeVoice();
-
-// Chrome loads voices asynchronously.
-window.speechSynthesis.onvoiceschanged = function(e) {
-  changeVoice();
-};
- */ 
-
-
+// COLLECTING THE DIFFERENT LANGUAGES 
 function populateVoiceList() {
-
   // set conditions
-  if(typeof speechSynthesis === 'undefined') {
-    return;
-  }
-
+  document.getElementById("voice-selection").remove(0);
   // access all possible voices
-  var voices = speechSynthesis.getVoices();
-
+  voices = speechSynthesis.getVoices();
   // storing the options
   for(var i = 0; i < voices.length; i++) {
     var option = document.createElement('option');
@@ -186,21 +148,7 @@ if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !=
 // LOADS READ TEXT FUNCTION INTO HTML 
 document.querySelector("button[type='button']").addEventListener('click', () => { 
   read(); 
-  // convert some stuff, range from  1-100 > utterence units 
 }); 
-
-/*function changeVolume(){ 
-  
-  //get volume input 
-  var speechVol = document.querySelector("input[type='range']").value;
-  // 0 - 100
-
-  // converting the volume input to speech limits 0-1
-  speechSynthesisUtteranceInstance.volume = speedVol/100;
-  // convert some stuff, range from  1-100 > utterence units 
-
-  console.log("vol: " + document.querySelector("input[type='range']"));
-}*/ 
 
 /**
  * Takes in the dimensions of the canvas and the new image, then calculates the new
